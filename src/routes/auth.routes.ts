@@ -7,7 +7,8 @@ class AuthRoutes{
 
     //Inicializa
     constructor(){
-
+        this.router = Router();
+        this.config()
     }
 
     config(){
