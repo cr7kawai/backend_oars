@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dist/app.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js\""
   },
   "keywords": [],
   "author": "",
