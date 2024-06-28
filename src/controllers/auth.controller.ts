@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import validator from "validator";
 import model from '../models/auth.modelo';
+import { utils } from "../utils/utils";
 
 
 class AuthController{
@@ -19,9 +20,16 @@ class AuthController{
      
             const lstUsers = await model.getuserByEmail(email);
             if (lstUsers.length <= 0) {
-            return res.status(404).json({ message: "El usuario y/o contraseña es incorrecto", code: 1 });
+            return res.status(404).json({ message: "El usuario es incorrecto", code: 1 });
             }
-            return res.json({ message: "Autenticación correcta", code: 0 });
+            let result = utils.checkPassword(password, lstUsers[0].password);
+            result.then((value)=>{
+                if(value){
+                    return res.json({message: "Autenticación correcta", code: 0});
+                }else{
+                    return res.json({message: "Password Incorrecto", code: 1});
+                }
+            })
 
         } catch (error: any) {
             return res.status(500).json({ message : `${error.message}` });
